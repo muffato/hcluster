@@ -1,9 +1,9 @@
-#include <malloc.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "cluster_graph.h"
 
 int gc_weight_w = 2;
+size_t gc_max_cluster_size = 500;
 
 static double CG_satur_thres = 0.70;
 
@@ -13,7 +13,9 @@ static bool cal_vertex_info(VertexInfo &dest, CVertex *src1,
 	cedge_t n_edge, etmp;
 	weight_t w;
 	cedge_t tmp;
-	
+
+	if (src1->v_set->size() > gc_max_cluster_zie || src2->v_set->size() > gc_max_cluster_size)
+		return false;
 	etmp = src1->v_set->size() * src2->v_set->size();
 	hash_set_misc<cvertex_t>::iterator p1, p2;
 	tmp = 0;
