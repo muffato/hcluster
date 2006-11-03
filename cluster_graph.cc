@@ -14,7 +14,7 @@ static bool cal_vertex_info(VertexInfo &dest, CVertex *src1,
 	weight_t w;
 	cedge_t tmp;
 
-	if (src1->v_set->size() > gc_max_cluster_zie || src2->v_set->size() > gc_max_cluster_size)
+	if (src1->v_set->size() + src2->v_set->size() > gc_max_cluster_size)
 		return false;
 	etmp = src1->v_set->size() * src2->v_set->size();
 	hash_set_misc<cvertex_t>::iterator p1, p2;
@@ -198,7 +198,7 @@ ClusterGraph::~ClusterGraph()
 		delete cluster_graph[i].v_set;
 		delete cluster_graph[i].n_set;
 	}
-	delete[] cluster_graph;
+	free(cluster_graph);
 }
 void ClusterGraph::init_opt()
 {
